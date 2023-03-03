@@ -150,7 +150,7 @@ final class BLACK_WIDGETS_Modernaweb_Plugin {
 		}
 
 		// Add Plugin actions
-		add_action( 'elementor/widgets/widgets_registered', [ $this, 'init_widgets' ] );
+		add_action( 'elementor/widgets/register', [ $this, 'init_widgets' ] );
 
 		// Add Category
 		add_action( 'elementor/elements/categories_registered', [ $this, 'add_elementor_widget_categories' ] );
@@ -292,36 +292,38 @@ final class BLACK_WIDGETS_Modernaweb_Plugin {
 		require_once( __DIR__ . '/widgets/bw-nav.php' );
 		// require_once( __DIR__ . '/widgets/bw-modale.php' ); 
 		// require_once( __DIR__ . '/widgets/bw-menu-x.php' );  // Navigation Menu with responsive size and more + logo and other header styles!
+		require_once( __DIR__ . '/widgets/bw-sentence.php' );
 
         // Register widget
-        \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new BLACK_WIDGETS_Title() );
-        \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new BLACK_WIDGETS_Button() );
-        \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new BLACK_WIDGETS_Image_Pro() );
-        \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new BLACK_WIDGETS_Flip_Ix() );
-        \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new BLACK_WIDGETS_Title_Animate() );
-        \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new BLACK_WIDGETS_Magic_Link() );
-        \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new BLACK_WIDGETS_Dropcap() );
-        \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new BLACK_WIDGETS_Fade() );
-        \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new BLACK_WIDGETS_Alert() );
-        \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new BLACK_WIDGETS_Icon() );
-        \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new BLACK_WIDGETS_List() );
-        \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new BLACK_WIDGETS_Social_Links() );
-        \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new BLACK_WIDGETS_Icon_Box() );
-        \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new BLACK_WIDGETS_Call_To_Action() );
-		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new BLACK_WIDGETS_Block_Quote() );
-		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new BLACK_WIDGETS_Typography() );
-		// \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new BLACK_WIDGETS_Loop() );
-		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new BLACK_WIDGETS_Box() );
-		// \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new BLACK_WIDGETS_Modale() );
-		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new BLACK_WIDGETS_Nav() );
+        \Elementor\Plugin::instance()->widgets_manager->register( new BLACK_WIDGETS_Title() );
+        \Elementor\Plugin::instance()->widgets_manager->register( new BLACK_WIDGETS_Button() );
+        \Elementor\Plugin::instance()->widgets_manager->register( new BLACK_WIDGETS_Image_Pro() );
+        \Elementor\Plugin::instance()->widgets_manager->register( new BLACK_WIDGETS_Flip_Ix() );
+        \Elementor\Plugin::instance()->widgets_manager->register( new BLACK_WIDGETS_Title_Animate() );
+        \Elementor\Plugin::instance()->widgets_manager->register( new BLACK_WIDGETS_Magic_Link() );
+        \Elementor\Plugin::instance()->widgets_manager->register( new BLACK_WIDGETS_Dropcap() );
+        \Elementor\Plugin::instance()->widgets_manager->register( new BLACK_WIDGETS_Fade() );
+        \Elementor\Plugin::instance()->widgets_manager->register( new BLACK_WIDGETS_Alert() );
+        \Elementor\Plugin::instance()->widgets_manager->register( new BLACK_WIDGETS_Icon() );
+        \Elementor\Plugin::instance()->widgets_manager->register( new BLACK_WIDGETS_List() );
+        \Elementor\Plugin::instance()->widgets_manager->register( new BLACK_WIDGETS_Social_Links() );
+        \Elementor\Plugin::instance()->widgets_manager->register( new BLACK_WIDGETS_Icon_Box() );
+        \Elementor\Plugin::instance()->widgets_manager->register( new BLACK_WIDGETS_Call_To_Action() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new BLACK_WIDGETS_Block_Quote() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new BLACK_WIDGETS_Typography() );
+		// \Elementor\Plugin::instance()->widgets_manager->register( new BLACK_WIDGETS_Loop() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new BLACK_WIDGETS_Box() );
+		// \Elementor\Plugin::instance()->widgets_manager->register( new BLACK_WIDGETS_Modale() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new BLACK_WIDGETS_Nav() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new BLACK_WIDGETS_Sentence() );
 
         if( isset($gsap_options) && !empty($gsap_options) ) {
             // require_once( __DIR__ . '/widgets/bw-sequence.php' );
             require_once( __DIR__ . '/widgets/bw-gsap-trigger.php' );
             require_once( __DIR__ . '/widgets/bw-gsap-horizontal-scrolling.php' );
-            // \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new BLACK_WIDGETS_Sequence() );
-            \Elementor\Plugin::instance()->widgets_manager->register_widget_type( new BLACK_WIDGETS_GSAP_Trigger() );
-			\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new BLACK_WIDGETS_GSAP_HORIZONTAL_SCROLLING() );
+            // \Elementor\Plugin::instance()->widgets_manager->register( new BLACK_WIDGETS_Sequence() );
+            \Elementor\Plugin::instance()->widgets_manager->register( new BLACK_WIDGETS_GSAP_Trigger() );
+			\Elementor\Plugin::instance()->widgets_manager->register( new BLACK_WIDGETS_GSAP_HORIZONTAL_SCROLLING() );
         }
 
 
@@ -339,7 +341,7 @@ final class BLACK_WIDGETS_Modernaweb_Plugin {
 	
 	}
 	
-	public function bw_style_before_section_start ( $element, $section_id, $args ) {
+	/* public function bw_style_before_section_start ( $element, $section_id, $args ) {
 		// @var \Elementor\Element_Base $element | https://code.elementor.com/php-hooks/
 		if ( 'section' === $element->get_name() && 'section_background' === $section_id ) {
 	 
@@ -388,18 +390,18 @@ final class BLACK_WIDGETS_Modernaweb_Plugin {
 
 			$element->end_controls_section();
 		}
-	 }
+	 } */
 
-	 public function bw_css_pattern ( $element ) {
+	/*  public function bw_css_pattern ( $element ) {
 		
 		$settings = $element->get_settings();
 		if (isset($settings['bw_custom_section_enable_css_pattern']) && $settings['bw_custom_section_enable_css_pattern'] == 'css_enable' ){
 			$element->add_render_attribute( '_wrapper', 'id', $settings['bw_custom_section_css_pattern'] );
 		}
 
-	 }
+	 } */
 
-	 function bw_css_js() {
+	 /* function bw_css_js() {
 
 		?>
 			<script>
@@ -409,7 +411,7 @@ final class BLACK_WIDGETS_Modernaweb_Plugin {
 			</script>
 		<?php
 
-	 }
+	 } */
 
 }
 
